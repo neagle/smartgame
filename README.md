@@ -2,10 +2,25 @@
 
 A node library for parsing [SGF format game records](http://www.red-bean.com/sgf/index.html) into JavaScript and back again.
 
+Installation
+============
+
+For most projects, you'll just want to install smartgame locally and add it to your project's dependencies in `package.json`:
+
+```
+$ npm install --save smartgame
+```
+
+If you want (for whatever reason) to use smartgame anywhere, you can install it globally.
+
+```
+$ npm install -g smartgame
+```
+
 Usage
 =====
 
-	var sgf = require('..');
+	var sgf = require('smartgame');
 	var fs = require('fs');
 
 	// Grab an SGF file from somewhere
