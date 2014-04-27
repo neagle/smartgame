@@ -46,14 +46,14 @@ The parse function would turn this into a JS Object that looked like this:
 							{ W: 'dd' }
 						]
 					},
-          {
+					{
 						parent: <a reference to the parent object>,
-            nodes: [
+						nodes: [
 							{ W: 'dc' },
 							{ B: 'ce' },
 							{ W: 'ed' }
 						],
-            sequences: [
+						sequences: [
 							{
 								parent: <a reference to the parent object>,
 								nodes: [
