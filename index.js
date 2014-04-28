@@ -22,16 +22,24 @@ exports.parse = function (sgf) {
 	parser = {
 
 		beginSequence: function (sgf) {
+			var key = 'sequences';
+
+			// Top-level sequences are gameTrees
 			if (!sequence) {
 				sequence = collection;
+				key = 'gameTrees';
+			}
+
+			if (sequence.gameTrees) {
+				key = 'gameTrees';
 			}
 
 			var newSequence = {
 				parent: sequence
 			};
 
-			sequence.sequences = sequence.sequences || [];
-			sequence.sequences.push(newSequence);
+			sequence[key] = sequence[key] || [];
+			sequence[key].push(newSequence);
 			sequence = newSequence;
 
 			return parse(sgf.substring(1));
@@ -181,5 +189,5 @@ exports.generate = function (record) {
 		return contents;
 	}
 
-	return stringifySequences(record.sequences);
+	return stringifySequences(record.gameTrees);
 };
