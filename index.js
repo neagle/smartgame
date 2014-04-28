@@ -15,8 +15,8 @@ exports.parse = function (sgf) {
 	// tracks the current node
 	var node;
 
-	// tracks the last key
-	var lastKey;
+	// tracks the last PropIdent
+	var lastPropIdent;
 
 	// A map of functions to parse the different components of an SGF file
 	parser = {
@@ -54,47 +54,49 @@ exports.parse = function (sgf) {
 		},
 
 		property: function (sgf) {
-			var value;
+			var propValue;
+
 			// Search for the first unescaped ]
 			var firstPropEnd = sgf.search(/[^\\]\]/) + 1;
 
 			if (firstPropEnd > -1) {
 				var property = sgf.substring(0, firstPropEnd + 1);
-				var valueBegin = property.indexOf('[');
+				var propValueBegin = property.indexOf('[');
 
-				var key = property.substring(0, valueBegin);
+				var propIdent = property.substring(0, propValueBegin);
 
-				// Point lists don't declare a property for each value
+				// Point lists don't declare a PropIdent for each PropValue
 				// Instead, they should use the last declared property
 				// See: http://www.red-bean.com/sgf/sgf4.html#move/pos
-				if (!key) {
-					key = lastKey;
+				if (!propIdent) {
+					propIdent = lastPropIdent;
 
 					// If this is the first property in a list of multiple
-					// properties, we need to wrap the value in an array
-					if (!Array.isArray(node[key])) {
-						node[key] = [node[key]];
+					// properties, we need to wrap the PropValue in an array
+					if (!Array.isArray(node[propIdent])) {
+						node[propIdent] = [node[propIdent]];
 					}
 				}
 
-				lastKey = key;
+				lastPropIdent = propIdent;
 
-				value = property.substring(valueBegin + 1, property.length - 1);
+				propValue = property.substring(propValueBegin + 1, property.length - 1);
 
-				// We have no problem parsing keys of any length, but the spec says
-				// they should be no longer than two characters.
+				// We have no problem parsing PropIdents of any length, but the spec
+				// says they should be no longer than two characters.
 				//
 				// http://www.red-bean.com/sgf/sgf4.html#2.2
-				if (key.length > 2) {
+				if (propIdent.length > 2) {
+					// TODO: What's the best way to issue a warning?
 					console.warn(
-						'SGF PropIdents should be no longer than two characters:', key
+						'SGF PropIdents should be no longer than two characters:', propIdent
 					);
 				}
 
-				if (Array.isArray(node[key])) {
-					node[key].push(value);
+				if (Array.isArray(node[propIdent])) {
+					node[propIdent].push(propValue);
 				} else {
-					node[key] = value;
+					node[propIdent] = propValue;
 				}
 
 				return parse(sgf.substring(firstPropEnd + 1));
