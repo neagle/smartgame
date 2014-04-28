@@ -94,3 +94,8 @@ License
 =======
 
 MIT
+
+History
+=======
+
+This parser began life as part of another project, but I thought it was useful enough to become it's own module. Breaking it and the other components of that project out into individual modules has helped me improve the separation of concerns and make the project more approachable. It's the first NPM package I've written that's not a plugin for something else (ie, a Grunt plugin or Yeoman generator) and any criticisms or suggestions are welcome.
