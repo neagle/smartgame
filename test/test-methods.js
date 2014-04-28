@@ -37,12 +37,18 @@ describe('parse & generate', function () {
 				}
 			}
 
+			// Strip out escaped square brackets
+			sgf = sgf.replace(/\\\]/g, '##ESCAPEDBRACKET##');
+
 			sgf = stripNodes(sgf);
 
 			// Strip all whitespace
 			sgf = sgf.replace(/[\n\r\s]/g, '');
 
 			sgf = putNodesBack(sgf);
+
+			// Put escaped square brackets back in
+			sgf = sgf.replace('##ESCAPEDBRACKET##', '\\]');
 
 			return sgf;
 		}

@@ -22,7 +22,7 @@ Black & white stones at the bottom are added using compressed point lists.]
 ;AE[ep][fp][kn][lo][lq][pn:pq]
 C[AddEmpty
 
-Black stones & stones of left white group are erased in FF3 way.
+Black stones & stones of left white group are erased in FF[3\] way.
 
 White stones at bottom right were erased using compressed point list.]
 ;AB[pd]AW[pp]PL[B]C[Added two stones.

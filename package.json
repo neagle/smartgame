@@ -1,36 +1,37 @@
 {
-  "name": "smartgame",
-  "version": "0.1.0",
-  "description": "Parse SGF (Smart Game Format) files into JavaScript and back again.",
-  "license": "MIT",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/neagle/smartgame.git"
-  },
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "scripts": {
-    "test": "mocha"
-  },
-  "keywords": [
-    "sgf",
-    "go",
-    "weiqi",
-    "baduk"
-  ],
-  "author": {
-    "name": "neagle",
-    "email": "nate@nateeagle.com",
-    "url": "https://github.com/neagle"
-  },
-  "bugs": {
-    "url": "https://github.com/neagle/smartgame/issues"
-  },
-  "homepage": "https://github.com/neagle/smartgame",
-  "devDependencies": {
-    "mocha": "*",
-    "util": "^0.10.3"
-  }
+	"name": "smartgame",
+	"version": "0.1.1",
+	"description": "Parse SGF (Smart Game Format) files into JavaScript and back again.",
+	"license": "MIT",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/neagle/smartgame.git"
+	},
+	"engines": {
+		"node": ">=0.10.0"
+	},
+	"scripts": {
+		"test": "mocha"
+	},
+	"keywords": [
+		"smartgame",
+		"sgf",
+		"go",
+		"weiqi",
+		"baduk"
+	],
+	"author": {
+		"name": "neagle",
+		"email": "nate@nateeagle.com",
+		"url": "https://github.com/neagle"
+	},
+	"bugs": {
+		"url": "https://github.com/neagle/smartgame/issues"
+	},
+	"homepage": "https://github.com/neagle/smartgame",
+	"devDependencies": {
+		"mocha": "*",
+		"util": "^0.10.3"
+	}
 }
