@@ -5,6 +5,8 @@
  * @return {object} The SGF file represented as a JS object
  */
 exports.parse = function (sgf) {
+	'use strict';
+
 	var parse;
 	var parser;
 	var collection = {};
@@ -138,7 +140,7 @@ exports.parse = function (sgf) {
 			type = 'endSequence';
 		} else if (initial === ';') {
 			type = 'node';
-		} else if (initial.match(/[A-Z\[]/)) {
+		} else if (initial.search(/[A-Z\[]/) !== -1) {
 			type = 'property';
 		} else {
 			type = 'unrecognized';
@@ -157,6 +159,8 @@ exports.parse = function (sgf) {
  * @return {string} The record as a string suitable for saving as an SGF file
  */
 exports.generate = function (record) {
+	'use strict';
+
 	function stringifySequences(sequences) {
 		var contents = '';
 
@@ -167,12 +171,14 @@ exports.generate = function (record) {
 			if (sequence.nodes) {
 				sequence.nodes.forEach(function (node) {
 					var nodeString = ';';
-					for (property in node) {
-						var prop = node[property];
-						if (Array.isArray(prop)) {
-							prop = prop.join('][');
+					for (var property in node) {
+						if (node.hasOwnProperty(property)) {
+							var prop = node[property];
+							if (Array.isArray(prop)) {
+								prop = prop.join('][');
+							}
+							nodeString += property + '[' + prop + ']';
 						}
-						nodeString += property + '[' + prop + ']';
 					}
 					contents += nodeString;
 				});
