@@ -26,13 +26,13 @@ Usage
 	// Grab an SGF file from somewhere
 	var example = fs.readFileSync('sgf/example.sgf', { encoding: 'utf8' });
 
-	var game = sgf.parse(example);
+	var collection = sgf.parse(example);
 
-	// ... use game however you want!
+	// ... use the collection object however you want!
 
-	// ... when game has been modified and you want to save it as an .sgf file
-	var record = sgf.generate(game);
-	fs.writeFileSync('new-example.sgf', record, { encoding: 'utf8' });
+	// ... when collection has been modified and you want to save it as an .sgf file
+	var collectionSGF = sgf.generate(collection);
+	fs.writeFileSync('new-example.sgf', collectionSGF, { encoding: 'utf8' });
 
 Example JS Game Record
 ======================
@@ -44,7 +44,7 @@ Let's take a very simple SGF file as an example:
 The parse function would turn this into a JS Object that looked like this:
 
 	{
-		sequences: [
+		gameTrees: [
 			{
 				parent: <a reference to the parent object>,
 				nodes: [
