@@ -1,6 +1,6 @@
 {
 	"name": "smartgame",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Parse SGF (Smart Game Format) files into JavaScript and back again.",
 	"license": "MIT",
 	"main": "index.js",
