@@ -60,3 +60,17 @@ describe('parse & generate', function () {
 		});
 	});
 });
+
+describe('parse', function () {
+	it('creates a collection object that has gameTrees', function () {
+		var sgf = require('..'),
+			fs = require('fs');
+
+
+		var files = fs.readdirSync('example/sgf');
+		files.forEach(function (file) {
+			var sgfFile = fs.readFileSync('example/sgf/' + file, { encoding: 'utf-8' });
+			assert(sgf.parse(sgfFile).gameTrees.length);
+		});
+	});
+});
