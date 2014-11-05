@@ -1,4 +1,4 @@
-# smartgame [![Build Status](https://api.travis-ci.org/neagle/smartgame.png?branch=master)](https://travis-ci.org/neagle/smartgame)
+# smartgame [![Build Status](https://api.travis-ci.org/neagle/smartgame.svg?branch=master)](https://travis-ci.org/neagle/smartgame)
 
 A node library for parsing [SGF format game records](http://www.red-bean.com/sgf/index.html) into JavaScript and back again.
 
