@@ -1,6 +1,6 @@
 # smartgame [![Build Status](https://api.travis-ci.org/neagle/smartgame.svg?branch=master)](https://travis-ci.org/neagle/smartgame)
 
-A node library for parsing [SGF format game records](http://www.red-bean.com/sgf/index.html) into JavaScript and back again.
+A node library for parsing [SGF format game records](http://www.red-bean.com/sgf/index.html) into JavaScript and back again. Then use [smartgamer](https://www.npmjs.com/package/smartgamer) to navigate and manipulate those game records.
 
 Installation
 ============
@@ -89,6 +89,8 @@ The parse function would turn this into a JS Object that looked like this:
 	}
 
 You'll still have to [read up a little bit on the way SGFs work](http://www.red-bean.com/sgf/index.html), but the structure is a simple and straightforward representation of the SGF in JS form.
+
+Want an easy way to navigate and manipulate that game? Check out [smartgamer](https://www.npmjs.com/package/smartgamer).
 
 License
 =======
