@@ -67,7 +67,7 @@ exports.parse = function (sgf) {
 			var propValue;
 
 			// Search for the first unescaped ]
-			var firstPropEnd = sgf.search(/[^\\]\]/) + 1;
+			var firstPropEnd = sgf.search(/([^\\]|[^\\]\\\\)\]/) + 1;
 
 			if (firstPropEnd > -1) {
 				var property = sgf.substring(0, firstPropEnd + 1);
