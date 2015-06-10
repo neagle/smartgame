@@ -67,54 +67,53 @@ exports.parse = function (sgf) {
 			var propValue;
 
 			// Search for the first unescaped ]
-			var firstPropEnd = sgf.search(/([^\\]|[^\\]\\\\)\]/) + 1;
+			var firstPropEnd = sgf.match(/([^\\\]]|\\(.|\n|\r))*\]/);
 
-			if (firstPropEnd > -1) {
-				var property = sgf.substring(0, firstPropEnd + 1);
-				var propValueBegin = property.indexOf('[');
-
-				var propIdent = property.substring(0, propValueBegin);
-
-				// Point lists don't declare a PropIdent for each PropValue
-				// Instead, they should use the last declared property
-				// See: http://www.red-bean.com/sgf/sgf4.html#move/pos
-				if (!propIdent) {
-					propIdent = lastPropIdent;
-
-					// If this is the first property in a list of multiple
-					// properties, we need to wrap the PropValue in an array
-					if (!Array.isArray(node[propIdent])) {
-						node[propIdent] = [node[propIdent]];
-					}
-				}
-
-				lastPropIdent = propIdent;
-
-				propValue = property.substring(propValueBegin + 1, property.length - 1);
-
-				// We have no problem parsing PropIdents of any length, but the spec
-				// says they should be no longer than two characters.
-				//
-				// http://www.red-bean.com/sgf/sgf4.html#2.2
-				if (propIdent.length > 2) {
-					// TODO: What's the best way to issue a warning?
-					console.warn(
-						'SGF PropIdents should be no longer than two characters:', propIdent
-					);
-				}
-
-				if (Array.isArray(node[propIdent])) {
-					node[propIdent].push(propValue);
-				} else {
-					node[propIdent] = propValue;
-				}
-
-				return parse(sgf.substring(firstPropEnd + 1));
-			} else {
-
-				// TODO: Provide details about where in the SGF the error occurred.
+			if (!firstPropEnd.length) {
 				throw new Error('malformed sgf');
 			}
+
+			firstPropEnd = firstPropEnd[0].length;
+
+			var property = sgf.substring(0, firstPropEnd);
+			var propValueBegin = property.indexOf('[');
+			var propIdent = property.substring(0, propValueBegin);
+
+			// Point lists don't declare a PropIdent for each PropValue
+			// Instead, they should use the last declared property
+			// See: http://www.red-bean.com/sgf/sgf4.html#move/pos
+			if (!propIdent) {
+				propIdent = lastPropIdent;
+
+				// If this is the first property in a list of multiple
+				// properties, we need to wrap the PropValue in an array
+				if (!Array.isArray(node[propIdent])) {
+					node[propIdent] = [node[propIdent]];
+				}
+			}
+
+			lastPropIdent = propIdent;
+
+			propValue = property.substring(propValueBegin + 1, property.length - 1);
+
+			// We have no problem parsing PropIdents of any length, but the spec
+			// says they should be no longer than two characters.
+			//
+			// http://www.red-bean.com/sgf/sgf4.html#2.2
+			if (propIdent.length > 2) {
+				// TODO: What's the best way to issue a warning?
+				console.warn(
+					'SGF PropIdents should be no longer than two characters:', propIdent
+				);
+			}
+
+			if (Array.isArray(node[propIdent])) {
+				node[propIdent].push(propValue);
+			} else {
+				node[propIdent] = propValue;
+			}
+
+			return parse(sgf.substring(firstPropEnd));
 		},
 
 		// Whitespace, tabs, or anything else we don't recognize
@@ -197,3 +196,4 @@ exports.generate = function (record) {
 
 	return stringifySequences(record.gameTrees);
 };
+
