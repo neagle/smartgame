@@ -44,7 +44,7 @@ exports.parse = function (sgf) {
 			sequence[key].push(newSequence);
 			sequence = newSequence;
 
-			return parse(sgf.substring(1));
+			return sgf.substring(1);
 		},
 
 		endSequence: function (sgf) {
@@ -53,14 +53,14 @@ exports.parse = function (sgf) {
 			} else {
 				sequence = null;
 			}
-			return parse(sgf.substring(1));
+			return sgf.substring(1);
 		},
 
 		node: function (sgf) {
 			node = {};
 			sequence.nodes = sequence.nodes || [];
 			sequence.nodes.push(node);
-			return parse(sgf.substring(1));
+			return sgf.substring(1);
 		},
 
 		property: function (sgf) {
@@ -113,39 +113,41 @@ exports.parse = function (sgf) {
 				node[propIdent] = propValue;
 			}
 
-			return parse(sgf.substring(firstPropEnd));
+			return sgf.substring(firstPropEnd);
 		},
 
 		// Whitespace, tabs, or anything else we don't recognize
 		unrecognized: function (sgf) {
 
 			// March ahead to the next character
-			return parse(sgf.substring(1));
+			return sgf.substring(1);
 		}
 	};
 
 	// Processes an SGF file character by character
 	parse = function (sgf) {
-		var initial = sgf.substring(0, 1);
-		var type;
+		while (sgf) {
+			var initial = sgf.substring(0, 1);
+			var type;
 
-		// Use the initial (the first character in the remaining sgf file) to
-		// decide which parser function to use
-		if (!initial) {
-			return collection;
-		} else if (initial === '(') {
-			type = 'beginSequence';
-		} else if (initial === ')') {
-			type = 'endSequence';
-		} else if (initial === ';') {
-			type = 'node';
-		} else if (initial.search(/[A-Z\[]/) !== -1) {
-			type = 'property';
-		} else {
-			type = 'unrecognized';
+			// Use the initial (the first character in the remaining sgf file) to
+			// decide which parser function to use
+			if (initial === '(') {
+				type = 'beginSequence';
+			} else if (initial === ')') {
+				type = 'endSequence';
+			} else if (initial === ';') {
+				type = 'node';
+			} else if (initial.search(/[A-Z\[]/) !== -1) {
+				type = 'property';
+			} else {
+				type = 'unrecognized';
+			}
+
+			sgf = parser[type](sgf);
 		}
 
-		return parser[type](sgf);
+		return collection;
 	};
 
 	// Begin parsing the SGF file
